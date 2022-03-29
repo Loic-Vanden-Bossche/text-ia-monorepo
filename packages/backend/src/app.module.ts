@@ -4,9 +4,7 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { MessageModule } from './message/message.module';
-import {TypeOrmModule} from "@nestjs/typeorm";
-
-// pgsql database
+import { TypeOrmModule } from "@nestjs/typeorm";
 
 @Module({
   imports: [UserModule, AuthModule, MessageModule, TypeOrmModule.forRoot(
