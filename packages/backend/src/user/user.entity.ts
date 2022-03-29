@@ -1,5 +1,6 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import { ApiProperty } from '@nestjs/swagger';
+import {Message} from "../message/message.entity";
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -45,6 +46,9 @@ export class User extends BaseEntity {
   })
   @Column('timestamp')
   updated: Date;
+
+  @OneToMany(type => Message, message => message.user)
+  messages: Message[];
 }
 
 
