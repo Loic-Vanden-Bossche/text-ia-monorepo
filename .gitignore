@@ -1,5 +1,7 @@
 db
 
+.angular
+
 # Logs
 logs
 *.log
