@@ -5,6 +5,8 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { MessageModule } from './message/message.module';
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { CharacterModule } from './character/character.module';
+import { DialogModule } from './dialog/dialog.module';
 
 @Module({
   imports: [UserModule, AuthModule, MessageModule, TypeOrmModule.forRoot(
@@ -18,7 +20,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }
-  )],
+  ), CharacterModule, DialogModule],
   controllers: [AppController],
   providers: [AppService],
 })

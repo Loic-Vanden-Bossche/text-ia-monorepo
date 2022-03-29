@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { Message } from "./message.entity";
-import CreateMessageDto from "./message.create.dto";
+import { DialogService } from "../dialog/dialog.service";
+
+import MessageCreateDto from "./message.create.dto";
 import MessageUpdateDto from "./message.update.dto";
-import { UserService } from "../user/user.service";
 
 @Injectable()
 export class MessageService {
 
-  constructor(private userService: UserService) {}
+  constructor(private dialogService: DialogService) {}
 
   findAll(): Promise<Message[]> {
     return Message.find();
@@ -17,10 +18,10 @@ export class MessageService {
     return Message.findOne(id);
   }
 
-  async create(message: CreateMessageDto): Promise<Message> {
+  async create(message: MessageCreateDto): Promise<Message> {
     const newMessage = new Message();
     newMessage.text = message.text;
-    newMessage.user = await this.userService.findOne(message.userId);
+    newMessage.dialog = await this.dialogService.findOne(message.dialogId);
 
     return await newMessage.save();
   }
