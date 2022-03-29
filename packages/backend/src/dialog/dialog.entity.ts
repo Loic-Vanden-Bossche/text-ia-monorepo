@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import { User } from "../user/user.entity";
 import { Message } from "../message/message.entity";
 import {ApiProperty} from "@nestjs/swagger";
@@ -13,12 +13,12 @@ export class Dialog extends BaseEntity {
   })
   id: string;
 
-  @Column()
+  @Column({default: true})
   @ApiProperty({
     description: 'The name of the dialog',
     example: 'My dialog',
   })
-  isArchived: boolean;
+  isArchived: boolean = false;
 
   @Column()
   @ApiProperty({
@@ -27,7 +27,6 @@ export class Dialog extends BaseEntity {
   })
   context: string;
 
-  @Column('uuid')
   @ApiProperty({
     description: 'The id of the user who created the dialog',
     example: '5e9f8f8f-8f8f-8f8f-8f8f-8f8f8f8f8f8f',
@@ -35,7 +34,7 @@ export class Dialog extends BaseEntity {
   @ManyToOne(type => User, user => user.dialogs)
   user: User;
 
-  @ManyToOne(type => Message, message => message.dialog)
+  @OneToMany(type => Message, message => message.dialog)
   messages: Message[];
 }
 

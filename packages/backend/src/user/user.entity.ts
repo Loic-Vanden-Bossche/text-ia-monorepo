@@ -1,4 +1,12 @@
-import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from "typeorm";
 import { ApiProperty } from '@nestjs/swagger';
 import { Dialog } from "../dialog/dialog.entity";
 
@@ -37,15 +45,15 @@ export class User extends BaseEntity {
     description: 'The created date of the user',
     example: '2020-01-01T00:00:00.000Z',
   })
-  @Column('timestamp')
-  created: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
   @ApiProperty({
     description: 'The updated date of the user',
     example: '2020-01-01T00:00:00.000Z',
   })
-  @Column('timestamp')
-  updated: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   @OneToMany(type => Dialog, dialog => dialog.user)
   dialogs: Dialog[];

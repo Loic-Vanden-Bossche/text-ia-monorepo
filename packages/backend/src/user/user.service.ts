@@ -16,11 +16,7 @@ export class UserService {
   }
 
   async create(user: UserCreateDto): Promise<User> {
-    const newUser = new User();
-    newUser.name = user.name;
-    newUser.email = user.email;
-    newUser.password = user.password;
-    return await newUser.save();
+    return User.create(user).save();
   }
 
   async update(id: string, user: UserUpdateDto): Promise<User> {

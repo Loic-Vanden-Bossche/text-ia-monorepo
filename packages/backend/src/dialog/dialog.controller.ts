@@ -17,6 +17,11 @@ export class DialogController {
     return this.dialogService.findOne(id);
   }
 
+  @Get(':id/messages')
+  getMessages(@Param('id') id: string) {
+    return this.dialogService.findMessages(id);
+  }
+
   @Post()
   createDialog(@Body() dialog: DialogCreateDto) {
     return this.dialogService.create(dialog);

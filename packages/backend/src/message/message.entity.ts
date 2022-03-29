@@ -1,4 +1,12 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from "typeorm";
 import { ApiProperty } from '@nestjs/swagger';
 import { Dialog } from "../dialog/dialog.entity";
 
@@ -26,13 +34,22 @@ export class Message extends BaseEntity {
   })
   iaGenerated: boolean;
 
-  @Column('uuid')
-  @ApiProperty({
-    description: 'The date of the message',
-    example: '2020-01-01T00:00:00.000Z',
-  })
   @ManyToOne(type => Dialog, dialog => dialog.messages)
   dialog: Dialog;
+
+  @ApiProperty({
+    description: 'The created date of the message',
+    example: '2020-01-01T00:00:00.000Z',
+  })
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @ApiProperty({
+    description: 'The updated date of the message',
+    example: '2020-01-01T00:00:00.000Z',
+  })
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
 
 

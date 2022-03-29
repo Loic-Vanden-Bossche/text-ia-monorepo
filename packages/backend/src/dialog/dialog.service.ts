@@ -1,21 +1,44 @@
-import { Injectable } from '@nestjs/common';
+import {BadRequestException, Injectable} from '@nestjs/common';
 import { Dialog } from "./dialog.entity";
 import DialogCreateDto from "./dialog.create.dto";
 import DialogUpdateDto from "./dialog.update.dto";
+import {UserService} from "../user/user.service";
+import {Message} from "../message/message.entity";
 
 @Injectable()
 export class DialogService {
 
+  constructor(private userService: UserService) { }
+
   findAll(): Promise<Dialog[]> {
-    return Dialog.find();
+    return Dialog.find({ relations: ['user'] });
   }
 
   findOne(id: string): Promise<Dialog> {
-    return Dialog.findOne(id);
+    return Dialog.findOne({
+      where: { id },
+      relations: ['user'],
+    });
   }
 
-  create(dialog: DialogCreateDto): Promise<Dialog> {
-    return Dialog.create(dialog).save();
+  findMessages(id: string): Promise<Message[]> {
+    return Dialog.findOne({
+      where: {
+        id: id
+      },
+      relations: ['messages']
+    }).then(dialog => dialog.messages);
+  }
+
+  async create(dialog: DialogCreateDto): Promise<Dialog> {
+
+    const user = await this.userService.findOne(dialog.userId);
+
+    if (!user) {
+      throw new BadRequestException('User not found');
+    }
+
+    return Dialog.create({ ...dialog, isArchived: false, user }).save();
   }
 
   async update(id: string, dialog: DialogUpdateDto): Promise<Dialog> {

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {BadRequestException, Injectable} from '@nestjs/common';
 import { Message } from "./message.entity";
 import { DialogService } from "../dialog/dialog.service";
 
@@ -19,11 +19,12 @@ export class MessageService {
   }
 
   async create(message: MessageCreateDto): Promise<Message> {
-    const newMessage = new Message();
-    newMessage.text = message.text;
-    newMessage.dialog = await this.dialogService.findOne(message.dialogId);
+    const dialog = await this.dialogService.findOne(message.dialogId);
 
-    return await newMessage.save();
+    if (!dialog) throw new BadRequestException('Dialog not found');
+
+    return await Message.create({ ...message, iaGenerated: false, dialog }).save()
+
   }
 
   async update(id: string, message: MessageUpdateDto): Promise<Message> {
