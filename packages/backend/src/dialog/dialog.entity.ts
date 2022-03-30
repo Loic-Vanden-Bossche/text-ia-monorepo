@@ -2,6 +2,7 @@ import {BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn
 import { User } from "../user/user.entity";
 import { Message } from "../message/message.entity";
 import {ApiProperty} from "@nestjs/swagger";
+import {Character} from "../character/character.entity";
 
 @Entity('dialogs')
 export class Dialog extends BaseEntity {
@@ -36,6 +37,9 @@ export class Dialog extends BaseEntity {
 
   @OneToMany(type => Message, message => message.dialog)
   messages: Message[];
+
+  @ManyToOne(type => Character, character => character.dialogs)
+  character: Character;
 }
 
 

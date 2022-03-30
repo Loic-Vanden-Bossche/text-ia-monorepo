@@ -2,6 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import {MessageService} from "../message/message.service";
 import {DialogService} from "./dialog.service";
 import {Dialog} from "../../../lib/dialog";
+import * as dayjs from "dayjs";
+
+import * as utc from 'dayjs/plugin/utc'
+import * as timezone from 'dayjs/plugin/timezone'
+import {SocketService} from "../socket.service";
+import {Message} from "../../../lib/message";
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 @Component({
   selector: 'app-dialog',
@@ -11,10 +20,9 @@ import {Dialog} from "../../../lib/dialog";
 export class DialogComponent implements OnInit {
 
   messages: any[];
-
   currentDialog: Dialog | null;
 
-  constructor(private messageService: MessageService, private dialogService: DialogService) {
+  constructor(private messageService: MessageService, private dialogService: DialogService, private socket: SocketService) {
     this.messages = [];
     this.currentDialog = null;
   }
@@ -23,9 +31,21 @@ export class DialogComponent implements OnInit {
     this.dialogService.getFirstDialog().subscribe(dialog => {
       this.currentDialog = dialog;
       this.dialogService.getMessages(dialog.id).subscribe(messages => {
-        this.messages = messages.map(msg => this.messageService.formatMessage(msg, dialog.user));
+        this.messages = messages.map(msg => this.messageService.formatMessage(msg, dialog.user, dialog.character));
       });
-      console.log(dialog);
+    });
+
+    this.socket.subscribeToMessages().subscribe((message: Message) => {
+      console.log(message);
+      if (!this.currentDialog) return;
+      this.messages.push(this.messageService.formatMessage(message, this.currentDialog.user, this.currentDialog.character));
+    });
+  }
+
+  resetDialog() {
+    if (!this.currentDialog) return;
+    this.dialogService.resetDialog(this.currentDialog?.id).subscribe(() => {
+      this.messages = [];
     });
   }
 
@@ -39,22 +59,8 @@ export class DialogComponent implements OnInit {
     });
 
     this.messageService.postMessage({ text: event.message, dialogId: this.currentDialog?.id }).subscribe(message => {
-      console.log(message);
-      this.messages.push({
-        text: message.text,
-        date: new Date(),
-        reply: true,
-        type: files.length ? 'file' : 'text',
-        files: files,
-        user: {
-          name: message.dialog.user.name,
-          avatar: 'https://i.gifer.com/no.gif',
-        },
-      });
-      const botReply = null;
-      if (botReply) {
-        setTimeout(() => { this.messages.push(botReply) }, 500);
-      }
+      if (!this.currentDialog) return;
+      this.messages.push(this.messageService.formatMessage(message, this.currentDialog.user, this.currentDialog.character));
     });
   }
 

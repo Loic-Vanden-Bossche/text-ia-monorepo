@@ -1,5 +1,6 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {ApiProperty} from "@nestjs/swagger";
+import {Dialog} from "../dialog/dialog.entity";
 
 @Entity('characters')
 export class Character extends BaseEntity {
@@ -31,6 +32,9 @@ export class Character extends BaseEntity {
     example: 'John Doe is a hero',
   })
   description: string;
+
+  @OneToMany(type => Dialog, dialog => dialog.character)
+  dialogs: Dialog[];
 }
 
 

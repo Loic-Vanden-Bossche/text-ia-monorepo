@@ -41,7 +41,10 @@ export class Message extends BaseEntity {
     description: 'The created date of the message',
     example: '2020-01-01T00:00:00.000Z',
   })
-  @CreateDateColumn()
+  @CreateDateColumn({
+    type: 'timestamp with time zone',
+    name: 'created_at',
+  })
   createdAt: Date;
 
   @ApiProperty({

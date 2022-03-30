@@ -21,4 +21,8 @@ export class DialogService {
     return this.http.get<Message[]>(`http://localhost:8080/dialogs/${dialogId}/messages`);
   }
 
+  resetDialog(dialogId: string): Observable<any> {
+    return this.http.post(`http://localhost:8080/messages/${dialogId}/reset`, {});
+  }
+
 }

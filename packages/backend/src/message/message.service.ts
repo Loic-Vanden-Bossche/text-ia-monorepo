@@ -1,14 +1,15 @@
 import {BadRequestException, Injectable} from '@nestjs/common';
 import { Message } from "./message.entity";
-import { DialogService } from "../dialog/dialog.service";
 
 import MessageCreateDto from "./message.create.dto";
 import MessageUpdateDto from "./message.update.dto";
+import {Dialog} from "../dialog/dialog.entity";
+import {DeleteResult} from "typeorm";
 
 @Injectable()
 export class MessageService {
 
-  constructor(private dialogService: DialogService) {}
+  constructor() {}
 
   findAll(): Promise<Message[]> {
     return Message.find();
@@ -18,12 +19,11 @@ export class MessageService {
     return Message.findOne(id);
   }
 
-  async create(message: MessageCreateDto): Promise<Message> {
-    const dialog = await this.dialogService.findOne(message.dialogId);
+  async create(message: MessageCreateDto, dialog: Dialog, iaGenerated = false): Promise<Message> {
 
     if (!dialog) throw new BadRequestException('Dialog not found');
 
-    return await Message.create({ ...message, iaGenerated: false, dialog }).save()
+    return await Message.create({ ...message, iaGenerated, dialog }).save()
 
   }
 
@@ -36,6 +36,10 @@ export class MessageService {
   async delete(id: string): Promise<Message> {
     const messageToDelete = await Message.findOne(id);
     return await messageToDelete.remove();
+  }
+
+  reset(dialogId: string): Promise<DeleteResult> {
+    return Message.delete({ dialog: { id: dialogId } });
   }
 
 }

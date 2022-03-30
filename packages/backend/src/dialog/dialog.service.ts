@@ -11,13 +11,13 @@ export class DialogService {
   constructor(private userService: UserService) { }
 
   findAll(): Promise<Dialog[]> {
-    return Dialog.find({ relations: ['user'] });
+    return Dialog.find({ relations: ['user', 'character'] });
   }
 
   findOne(id: string): Promise<Dialog> {
     return Dialog.findOne({
       where: { id },
-      relations: ['user'],
+      relations: ['user', 'character'],
     });
   }
 

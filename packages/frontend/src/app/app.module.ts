@@ -4,18 +4,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {NbThemeModule, NbLayoutModule, NbChatModule} from '@nebular/theme';
+import {NbThemeModule, NbLayoutModule, NbChatModule, NbIconModule, NbButtonModule} from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { DialogComponent } from './dialog/dialog.component';
 import {DialogService} from "./dialog/dialog.service";
-import { MessageComponent } from './message/message.component';
 import {HttpClientModule} from "@angular/common/http";
+import {SocketService} from "./socket.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     DialogComponent,
-    MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -25,9 +24,11 @@ import {HttpClientModule} from "@angular/common/http";
     NbLayoutModule,
     NbEvaIconsModule,
     NbChatModule,
-    HttpClientModule
+    HttpClientModule,
+    NbIconModule,
+    NbButtonModule
   ],
-  providers: [DialogService],
+  providers: [DialogService, SocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
