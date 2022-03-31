@@ -4,6 +4,7 @@ import DialogCreateDto from "./dialog.create.dto";
 import DialogUpdateDto from "./dialog.update.dto";
 import {UserService} from "../user/user.service";
 import {Message} from "../message/message.entity";
+import {Character} from "../character/character.entity";
 
 @Injectable()
 export class DialogService {
@@ -33,12 +34,13 @@ export class DialogService {
   async create(dialog: DialogCreateDto): Promise<Dialog> {
 
     const user = await this.userService.findOne(dialog.userId);
+    const character = await Character.findOne(dialog.characterId);
 
     if (!user) {
       throw new BadRequestException('User not found');
     }
 
-    return Dialog.create({ ...dialog, isArchived: false, user }).save();
+    return Dialog.create({ ...dialog, isArchived: false, user, character }).save();
   }
 
   async update(id: string, dialog: DialogUpdateDto): Promise<Dialog> {

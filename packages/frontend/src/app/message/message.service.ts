@@ -25,7 +25,7 @@ export class MessageService {
     return {
       text: message.text,
       date: MessageService.toTimeZone(message.createdAt),
-      reply: message.iaGenerated,
+      reply: !message.iaGenerated,
       type: 'text',
       user: {
         name: message.iaGenerated ? character.name: user.name,

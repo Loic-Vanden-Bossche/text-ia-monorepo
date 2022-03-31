@@ -19,4 +19,13 @@ export default class DialogCreateDto {
     example: '5e9f8f8f-8f8f-8f8f-8f8f-8f8f8f8f8f8f',
   })
   userId: string;
+
+  @IsUUID()
+  @IsNotEmpty()
+  @ApiProperty({
+    description: 'Character id',
+    example: '5e9f8f8f-8f8f-8f8f-8f8f-8f8f8f8f8f8f',
+  })
+  characterId: string;
 }
+// 60eeac70-0504-4240-a0ce-52730f5aaf9e

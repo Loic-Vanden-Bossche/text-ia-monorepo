@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {DialogComponent} from "./dialog/dialog.component";
 
 const routes: Routes = [
-  { path: '', component: DialogComponent }
+  { path: 'dialog/:id', component: DialogComponent }
 ];
 
 @NgModule({

@@ -8,6 +8,8 @@ import * as utc from 'dayjs/plugin/utc'
 import * as timezone from 'dayjs/plugin/timezone'
 import {SocketService} from "../socket.service";
 import {Message} from "../../../lib/message";
+import {ActivatedRoute, ParamMap} from "@angular/router";
+import {forkJoin} from "rxjs";
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -22,21 +24,33 @@ export class DialogComponent implements OnInit {
   messages: any[];
   currentDialog: Dialog | null;
 
-  constructor(private messageService: MessageService, private dialogService: DialogService, private socket: SocketService) {
+  constructor(
+    private messageService: MessageService,
+    private dialogService: DialogService,
+    private socket: SocketService,
+    private route: ActivatedRoute
+  ) {
     this.messages = [];
     this.currentDialog = null;
   }
 
   ngOnInit() {
-    this.dialogService.getFirstDialog().subscribe(dialog => {
-      this.currentDialog = dialog;
-      this.dialogService.getMessages(dialog.id).subscribe(messages => {
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      if(!params.has('id')) return;
+
+      const id = <string>params.get('id');
+
+      forkJoin([
+        this.dialogService.getDialog(id),
+        this.dialogService.getMessages(id)
+      ]).subscribe((data) => {
+        const [dialog, messages] = data;
+        this.currentDialog = dialog;
         this.messages = messages.map(msg => this.messageService.formatMessage(msg, dialog.user, dialog.character));
-      });
+      })
     });
 
     this.socket.subscribeToMessages().subscribe((message: Message) => {
-      console.log(message);
       if (!this.currentDialog) return;
       this.messages.push(this.messageService.formatMessage(message, this.currentDialog.user, this.currentDialog.character));
     });
