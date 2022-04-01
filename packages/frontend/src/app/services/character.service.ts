@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Character} from "../../lib/character";
+import {Character} from "../../../lib/character";
 import {map, switchMap} from "rxjs";
-import {Dialog} from "../../lib/dialog";
+import {Dialog} from "../../../lib/dialog";
 import {UserService} from "./user.service";
 
 @Injectable({

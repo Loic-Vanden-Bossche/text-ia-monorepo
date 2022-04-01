@@ -3,7 +3,6 @@ import {Dialog} from "../../../lib/dialog";
 import {HttpClient} from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import {Message} from "../../../lib/message";
-import {ActivatedRoute, ParamMap} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +10,6 @@ import {ActivatedRoute, ParamMap} from "@angular/router";
 export class DialogService {
 
   constructor(private http: HttpClient) { }
-
-  getFirstDialog(): Observable<Dialog> {
-    return this.http.get<Dialog[]>('http://localhost:8080/dialogs').pipe(
-      map(dialogs => dialogs[1])
-    );
-  }
 
   getDialog(id: string): Observable<Dialog> {
     return this.http.get<Dialog>('http://localhost:8080/dialogs/' + id);

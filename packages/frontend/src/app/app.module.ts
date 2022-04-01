@@ -14,13 +14,14 @@ import {
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { DialogComponent } from './dialog/dialog.component';
-import {DialogService} from "./dialog/dialog.service";
+import {DialogService} from "./services/dialog.service";
 import {HttpClientModule} from "@angular/common/http";
-import {SocketService} from "./socket.service";
+import {SocketService} from "./services/socket.service";
 import { CharacterModalComponent } from './character-modal/character-modal.component';
 import { HomeComponent } from './home/home.component';
-import {CharacterService} from "./character.service";
-import {UserService} from "./user.service";
+import {CharacterService} from "./services/character.service";
+import {UserService} from "./services/user.service";
+import { DialogListComponent } from './dialog-list/dialog-list.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import {UserService} from "./user.service";
     DialogComponent,
     CharacterModalComponent,
     HomeComponent,
+    DialogListComponent,
   ],
   imports: [
     BrowserModule,
