@@ -63,6 +63,11 @@ export class DialogComponent implements OnInit {
     });
   }
 
+  // reutrun to previous page
+  return() {
+    window.history.back();
+  }
+
   sendMessage(event: any) {
     const files = !event.files ? [] : event.files.map((file: { src: any; type: any; }) => {
       return {

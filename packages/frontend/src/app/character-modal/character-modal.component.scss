@@ -1,0 +1,16 @@
+.title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-container {
+  width: 40vw;
+
+  .character-image {
+    img {
+      width: 100px;
+      border-radius: 50%;
+      height: auto;
+    }
+  }
+}

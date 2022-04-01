@@ -14,10 +14,17 @@ export class Character extends BaseEntity {
 
   @Column()
   @ApiProperty({
-    description: 'The name of the character',
-    example: 'John Doe',
+    description: 'The firstname of the character',
+    example: 'John',
   })
-  name: string;
+  firstName: string;
+
+  @Column()
+  @ApiProperty({
+    description: 'The lastname of the character',
+    example: 'Doe',
+  })
+  lastname: string;
 
   @Column()
   @ApiProperty({
@@ -32,6 +39,55 @@ export class Character extends BaseEntity {
     example: 'John Doe is a hero',
   })
   description: string;
+
+  @Column()
+  @ApiProperty({
+    description: 'The image url of the character',
+    example: 'https://example.com/image.png',
+  })
+  image: string;
+
+  @Column()
+  @ApiProperty({
+    description: 'The age of the character',
+    example: 20,
+  })
+  age: number;
+
+  @Column()
+  @ApiProperty({
+    description: 'The eye color of the character',
+    example: 'blue',
+  })
+  eyeColor: string;
+
+  @Column()
+  @ApiProperty({
+    description: 'The hair color of the character',
+    example: 'blond',
+  })
+  hairColor: string;
+
+  @Column()
+  @ApiProperty({
+    description: 'The hair length of the character',
+    example: 'long',
+  })
+  hairLength: string;
+
+  @Column()
+  @ApiProperty({
+    description: 'The skin color of the character',
+    example: 'white',
+  })
+  color: string;
+
+  @Column()
+  @ApiProperty({
+    description: 'The sex of the character',
+    example: 'male',
+  })
+  sex: string;
 
   @OneToMany(type => Dialog, dialog => dialog.character)
   dialogs: Dialog[];

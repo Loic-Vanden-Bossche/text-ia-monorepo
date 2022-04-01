@@ -1,0 +1,26 @@
+<nb-card [nbSpinner]="loading" nbSpinnerSize="giant" nbSpinnerStatus="primary" class="card-container">
+  <nb-card-header>
+    <div class="title">
+      <h3>Generate a new character</h3>
+      <button (click)="generateCharacter()" nbButton status="primary"><nb-icon icon="sync-outline"></nb-icon>Generate new</button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="character-container" *ngIf="character">
+      <div class="character-image">
+        <img [src]="character.image" alt="Character image">
+      </div>
+      <div class="character-info">
+        <div class="character-name">
+          <h3>{{ character.firstName }}</h3>
+        </div>
+        <div class="character-description">
+          <p>{{ character.description }}</p>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+    <button (click)="createCharacterAndDialog()" nbButton status="primary"><nb-icon icon="plus-square-outline"></nb-icon>Create dialog</button>
+  </nb-card-footer>
+</nb-card>

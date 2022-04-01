@@ -23,8 +23,7 @@ export class MessageService {
 
     if (!dialog) throw new BadRequestException('Dialog not found');
 
-    return await Message.create({ ...message, iaGenerated, dialog }).save()
-
+    return Message.create({ ...message, iaGenerated, dialog }).save();
   }
 
   async update(id: string, message: MessageUpdateDto): Promise<Message> {

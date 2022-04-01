@@ -28,8 +28,8 @@ export class MessageService {
       reply: !message.iaGenerated,
       type: 'text',
       user: {
-        name: message.iaGenerated ? character.name: user.name,
-        avatar: 'https://i.gifer.com/no.gif',
+        name: message.iaGenerated ? character.firstName: user.name,
+        avatar: message.iaGenerated ? character.image : 'https://i.gifer.com/no.gif',
       },
     };
   }

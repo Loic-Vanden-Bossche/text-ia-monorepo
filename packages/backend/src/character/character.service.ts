@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Character } from "./character.entity";
 import CharacterCreateDto from "./character.create.dto";
+import CharacterUpdateDto from "./character.update.dto";
+import {CharacterDescription, FacesService} from "./faces.service";
 
 @Injectable()
 export class CharacterService {
+
+  constructor(private facesService: FacesService) {}
 
   findAll(): Promise<Character[]> {
     return Character.find();
@@ -13,24 +17,23 @@ export class CharacterService {
     return Character.findOne(id);
   }
 
-  async create(character: CharacterCreateDto): Promise<Character> {
-    const newCharacter = new Character();
-    newCharacter.name = character.name;
-    newCharacter.description = character.description;
-    newCharacter.internalDescription = character.internalDescription;
-    return newCharacter.save();
+  formatCharacterDescription(character: CharacterDescription): Character {
+   return Character.create({...character, age: parseInt(character.age)});
   }
 
-  async update(id: string, character: CharacterCreateDto): Promise<Character> {
-    const updatedCharacter = await Character.findOne(id);
-    updatedCharacter.name = character.name;
-    updatedCharacter.description = character.description;
-    updatedCharacter.internalDescription = character.internalDescription;
-    return updatedCharacter.save();
+  create(character: CharacterCreateDto): Promise<Character> {
+    return Character.create({...character, internalDescription: character.description}).save();
+  }
+
+  getRandom(): Promise<Character> {
+    return this.facesService.getRandomPerson().then(person => this.formatCharacterDescription(person));
+  }
+
+  async update(id: string, character: CharacterUpdateDto): Promise<Character> {
+    return (await Character.findOne(id)).save();
   }
 
   async delete(id: string): Promise<Character> {
-    const deletedCharacter = await Character.findOne(id);
-    return deletedCharacter.remove();
+    return (await Character.findOne(id)).remove();
   }
 }

@@ -67,7 +67,7 @@ export class IAService {
       {
         headers: {
           'Content-Type': 'application/json',
-          'authorization': 'Bearer cd-A847F27236F04FE096C6C266AF5B76D1',
+          'authorization': `Bearer ${process.env.CEDILLE_API_KEY}`
         }
       }).toPromise().then(response => formatResponse(response.data));
   }
@@ -83,7 +83,7 @@ export class IAService {
         if(/\[[A-Za-z]+](:.*| : .*)/gm.exec(line)) {
           const [personName, text] = line.split(":");
           const person = /\[(.*?)]/gm.exec(personName)![1].toLowerCase();
-          if (person !== targetCharacter.name.toLowerCase()) break;
+          if (person !== targetCharacter.firstName.toLowerCase()) break;
           if (!person || !text) break;
           messages.push(text.trim());
         } else if (messages.length > 0) {
@@ -98,9 +98,9 @@ export class IAService {
     return `${dialog.context}\\n${dialog.character.internalDescription}\\n\\n`
       .concat(messages
         .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
-        .map(m => `[${m.iaGenerated ? dialog.character.name : dialog.user.name}]:  ${m.text}`)
+        .map(m => `[${m.iaGenerated ? dialog.character.firstName : dialog.user.name}]:  ${m.text}`)
         .join('\\n')
-        .concat(`\\n[${dialog.character.name}]: `)
+        .concat(`\\n[${dialog.character.firstName}]: `)
       );
   }
 

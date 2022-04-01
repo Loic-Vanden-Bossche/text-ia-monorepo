@@ -13,6 +13,11 @@ export class CharacterController {
     return this.characterService.findAll();
   }
 
+  @Get('/generate')
+  random(): Promise<Character> {
+    return this.characterService.getRandom();
+  }
+
   @Get(':id')
   findOne(@Param('id')id: string): Promise<Character> {
     return this.characterService.findOne(id);
