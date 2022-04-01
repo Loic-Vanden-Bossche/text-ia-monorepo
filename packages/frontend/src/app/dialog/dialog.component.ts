@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {MessageService} from "../services/message.service";
 import {DialogService} from "../services/dialog.service";
 import {Dialog} from "../../../lib/dialog";
@@ -10,6 +10,7 @@ import {SocketService} from "../services/socket.service";
 import {Message} from "../../../lib/message";
 import {ActivatedRoute, ParamMap} from "@angular/router";
 import {forkJoin} from "rxjs";
+import html2canvas from "html2canvas";
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -33,7 +34,6 @@ export class DialogComponent implements OnInit {
     this.messages = [];
     this.currentDialog = null;
   }
-
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
       if(!params.has('id')) return;

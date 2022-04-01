@@ -50,6 +50,31 @@
 
 }
 
+.table-container {
+  border-radius: 0.25rem;
+  border: 1px solid var(--border-basic-color-3);
+  overflow: hidden;
+}
+
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-style: hidden;
+
+  td {
+    border: 1px solid var(--border-basic-color-3);
+    padding: 8px;
+  }
+
+  tr {
+    background-color: #323259;
+    transition: all 0.1s ease-in-out;
+  }
+
+  tr:nth-child(even){background-color: #36365e;}
+  tr:hover {background-color: #3d3d67;}
+}
+
 @media (max-width: 1400px) {
   .card-container {
     width: 55vw;

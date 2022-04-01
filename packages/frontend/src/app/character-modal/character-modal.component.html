@@ -18,7 +18,16 @@
         </div>
       </nb-card>
 
-      <nb-accordion class multi>
+      <nb-accordion class>
+        <nb-accordion-item [expanded]="true">
+          <nb-accordion-item-header>
+            Bio
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>
+            {{ character.description }}
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+
         <nb-accordion-item>
           <nb-accordion-item-header>
             Description
@@ -30,23 +39,45 @@
 
         <nb-accordion-item>
           <nb-accordion-item-header>
-            Reviews
+            Details
           </nb-accordion-item-header>
           <nb-accordion-item-body>
-            A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
-            Originally, nebula was a name for any diffuse astronomical object,
-            including galaxies beyond the Milky Way.
-          </nb-accordion-item-body>
-        </nb-accordion-item>
-
-        <nb-accordion-item>
-          <nb-accordion-item-header>
-            Edit
-          </nb-accordion-item-header>
-          <nb-accordion-item-body>
-            A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
-            Originally, nebula was a name for any diffuse astronomical object,
-            including galaxies beyond the Milky Way.
+            <div class="table-container">
+              <table class="details-table">
+                <tr>
+                  <td>Firstname</td>
+                  <td>{{ character.firstName }}</td>
+                </tr>
+                <tr>
+                  <td>Lastname</td>
+                  <td>{{ character.lastname }}</td>
+                </tr>
+                <tr>
+                  <td>Sex</td>
+                  <td>{{ character.sex }}</td>
+                </tr>
+                <tr>
+                  <td>Age</td>
+                  <td>{{ character.age }}</td>
+                </tr>
+                <tr>
+                  <td>Eye color</td>
+                  <td>{{ character.eyeColor }}</td>
+                </tr>
+                <tr>
+                  <td>Hair color</td>
+                  <td>{{ character.hairColor }}</td>
+                </tr>
+                <tr>
+                  <td>Hair length</td>
+                  <td>{{ character.hairLength }}</td>
+                </tr>
+                <tr>
+                  <td>Skin color</td>
+                  <td>{{ character.color }}</td>
+                </tr>
+              </table>
+            </div>
           </nb-accordion-item-body>
         </nb-accordion-item>
       </nb-accordion>

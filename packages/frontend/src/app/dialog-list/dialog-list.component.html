@@ -1,7 +1,7 @@
 <nb-card size="small" class="characters-container">
   <nb-list>
     <nb-list-item (click)="openDialog(dialog.id)" class="user-card" *ngFor="let dialog of dialogs">
-      <nb-user  [picture]="getAvatar(dialog.character.id)" [name]="dialog.character.firstName + ' ' + dialog.character.lastname" [title]="dialog.character.description">
+      <nb-user size="giant" [picture]="getAvatar(dialog.character.id)" [name]="dialog.character.firstName + ' ' + dialog.character.lastname" [title]="dialog.character.description">
       </nb-user>
       <button (click)="removeDialog($event, dialog.id)" nbButton status="primary"><nb-icon icon="trash-2-outline"></nb-icon></button>
     </nb-list-item>

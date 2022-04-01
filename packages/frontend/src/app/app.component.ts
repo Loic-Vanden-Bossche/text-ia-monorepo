@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {SocketService} from "./services/socket.service";
 
 @Component({
@@ -6,7 +6,7 @@ import {SocketService} from "./services/socket.service";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent  {
+export class AppComponent {
   title = 'ia-chat';
 
   constructor(private socketService: SocketService ) {
