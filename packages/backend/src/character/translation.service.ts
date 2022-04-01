@@ -14,7 +14,7 @@ export class TranslationService {
 
   getWords(data: CharacterDescription) {
     const words = data.sex === 'female' ? { p: 'she', c: { normal: 'woman', young: 'girl' } } : { p: 'he', c: { normal: 'man', young: 'boy' } };
-    return { p: words.p, c: (parseInt(data.age) >= 18 ? words.c.normal : words.c.young) }
+    return { p: words.p, c: (parseInt(<string>data.age) >= 18 ? words.c.normal : words.c.young) }
   }
 
   getConstruction(res: CharacterDescription) {

@@ -5,12 +5,67 @@
 
 .card-container {
   width: 40vw;
+  height: 80vh;
 
-  .character-image {
-    img {
-      width: 100px;
-      border-radius: 50%;
-      height: auto;
+  .context-card {
+    background-color: #414167;
+
+    .context-card-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
     }
   }
+
+  .character-header  {
+
+    padding: 15px;
+    background-color: #414167;
+
+    h4 {
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+    }
+
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 30px;
+
+    .character-image {
+      img {
+        width: 100px;
+        margin-right: 20px;
+        border-radius: 50%;
+        height: auto;
+      }
+    }
+  }
+  nb-accordion {
+    margin-bottom: 30px;
+
+    nb-accordion-item {
+      background-color: #414167;
+    }
+  }
+
 }
+
+@media (max-width: 1400px) {
+  .card-container {
+    width: 55vw;
+  }
+}
+
+@media (max-width: 900px) {
+  .card-container {
+    width: 70vw;
+  }
+}
+
+
+@media (max-width: 500px) {
+  .card-container {
+    width: 85vw;
+  }
+}
+

@@ -42,13 +42,6 @@ export class Character extends BaseEntity {
 
   @Column()
   @ApiProperty({
-    description: 'The image url of the character',
-    example: 'https://example.com/image.png',
-  })
-  image: string;
-
-  @Column()
-  @ApiProperty({
     description: 'The age of the character',
     example: 20,
   })

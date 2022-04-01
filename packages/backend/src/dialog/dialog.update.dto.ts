@@ -1,14 +1,14 @@
-import { IsNotEmpty, IsString, MaxLength } from "class-validator";
+import {IsNotEmpty, IsString, IsUUID, MaxLength} from "class-validator";
 import {ApiProperty} from "@nestjs/swagger";
+import {Context} from "../context/context.entity";
 
 export default class DialogUpdateDto {
   @IsString()
   @IsNotEmpty()
-  @MaxLength(500)
+  @IsUUID()
   @ApiProperty({
-    description: 'Dialog context',
-    maxLength: 500,
-    example: 'This is a simple dialog between 2 persons',
+    description: 'Dialog context id',
+    example: '5e9f8f8f-8f8f-8f8f-8f8f-8f8f8f8f8f8f',
   })
-  context: string;
+  contextId: string;
 }

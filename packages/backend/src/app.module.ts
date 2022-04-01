@@ -8,6 +8,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { CharacterModule } from './character/character.module';
 import { DialogModule } from './dialog/dialog.module';
 import {ConfigModule} from "@nestjs/config";
+import { ContextModule } from './context/context.module';
 
 @Module({
   imports: [UserModule, AuthModule, MessageModule, TypeOrmModule.forRoot(
@@ -21,7 +22,7 @@ import {ConfigModule} from "@nestjs/config";
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }
-  ), CharacterModule, DialogModule, ConfigModule.forRoot({isGlobal: true, envFilePath: ['../../.env']})],
+  ), CharacterModule, DialogModule, ConfigModule.forRoot({isGlobal: true, envFilePath: ['../../.env']}), ContextModule],
   controllers: [AppController],
   providers: [AppService],
 })

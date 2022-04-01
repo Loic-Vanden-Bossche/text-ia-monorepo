@@ -2,15 +2,13 @@ import { IsNotEmpty, IsString, IsUUID, MaxLength } from "class-validator";
 import {ApiProperty} from "@nestjs/swagger";
 
 export default class DialogCreateDto {
-  @IsString()
+  @IsUUID()
   @IsNotEmpty()
-  @MaxLength(500)
   @ApiProperty({
-    description: 'Dialog context',
-    maxLength: 500,
-    example: 'This is a simple dialog between 2 persons',
+    description: 'Dialog context id',
+    example: '5e9f8f8f-8f8f-8f8f-8f8f-8f8f8f8f8f8f',
   })
-  context: string;
+  contextId: string;
 
   @IsUUID()
   @IsNotEmpty()
@@ -28,4 +26,3 @@ export default class DialogCreateDto {
   })
   characterId: string;
 }
-// 60eeac70-0504-4240-a0ce-52730f5aaf9e

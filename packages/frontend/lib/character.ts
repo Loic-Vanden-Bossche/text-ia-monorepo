@@ -6,7 +6,7 @@ export interface Character {
   lastname: string;
   internalDescription: string;
   description: string;
-  image: string;
+  image?: string;
   age: number;
   eyeColor: string;
   hairColor: string;
@@ -15,3 +15,5 @@ export interface Character {
   sex: string;
   dialogs: Dialog[];
 }
+
+export const getAvatar = (id: string) => `http://localhost:8080/characters/${id}/avatar`;

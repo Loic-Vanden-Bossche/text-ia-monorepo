@@ -1,26 +1,71 @@
 <nb-card [nbSpinner]="loading" nbSpinnerSize="giant" nbSpinnerStatus="primary" class="card-container">
   <nb-card-header>
     <div class="title">
-      <h3>Generate a new character</h3>
+      <h3>Character generation</h3>
       <button (click)="generateCharacter()" nbButton status="primary"><nb-icon icon="sync-outline"></nb-icon>Generate new</button>
     </div>
   </nb-card-header>
   <nb-card-body>
     <div class="character-container" *ngIf="character">
-      <div class="character-image">
-        <img [src]="character.image" alt="Character image">
-      </div>
-      <div class="character-info">
-        <div class="character-name">
-          <h3>{{ character.firstName }}</h3>
+      <nb-card class="character-header">
+        <div class="character-image">
+          <img [src]="character.image" alt="Character image">
         </div>
-        <div class="character-description">
-          <p>{{ character.description }}</p>
+        <div class="character-info">
+          <div class="character-name">
+            <h2>{{ character.firstName }} {{ character.lastname }}</h2>
+          </div>
         </div>
-      </div>
+      </nb-card>
+
+      <nb-accordion class multi>
+        <nb-accordion-item>
+          <nb-accordion-item-header>
+            Description
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>
+            {{ character.description }}
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+
+        <nb-accordion-item>
+          <nb-accordion-item-header>
+            Reviews
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>
+            A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
+            Originally, nebula was a name for any diffuse astronomical object,
+            including galaxies beyond the Milky Way.
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+
+        <nb-accordion-item>
+          <nb-accordion-item-header>
+            Edit
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>
+            A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
+            Originally, nebula was a name for any diffuse astronomical object,
+            including galaxies beyond the Milky Way.
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+      <nb-card class="context-card">
+        <nb-card-header class="context-card-header">
+          <h4>Dialog context</h4>
+          <nb-select (selectedChange)="onSelectContext($event)" placeholder="Select dialog context" hero status="success">
+            <nb-option-group *ngFor="let group of contextGroups" [title]="group.name | titlecase">
+              <nb-option *ngFor="let context of group.contexts" [value]="context">{{context.name | lowercase}}</nb-option>
+            </nb-option-group>
+          </nb-select>
+        </nb-card-header>
+        <nb-card-body>
+          {{ selectedContext?.description || 'No context selected.'}}
+        </nb-card-body>
+      </nb-card>
     </div>
   </nb-card-body>
   <nb-card-footer>
-    <button (click)="createCharacterAndDialog()" nbButton status="primary"><nb-icon icon="plus-square-outline"></nb-icon>Create dialog</button>
+    <button [disabled]="!selectedContext" (click)="createCharacterAndDialog()" nbButton status="primary"><nb-icon icon="plus-square-outline"></nb-icon>Create dialog</button>
   </nb-card-footer>
 </nb-card>

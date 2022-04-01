@@ -8,7 +8,7 @@ export interface CharacterDescription {
     lastname: string;
     description: string;
     image: string;
-    age: string;
+    age: string | number;
     sex: string;
     eyeColor: string;
     hairColor: string;

@@ -3,6 +3,7 @@ import { User } from "../user/user.entity";
 import { Message } from "../message/message.entity";
 import {ApiProperty} from "@nestjs/swagger";
 import {Character} from "../character/character.entity";
+import {Context} from "../context/context.entity";
 
 @Entity('dialogs')
 export class Dialog extends BaseEntity {
@@ -14,32 +15,17 @@ export class Dialog extends BaseEntity {
   })
   id: string;
 
-  @Column({default: true})
-  @ApiProperty({
-    description: 'The name of the dialog',
-    example: 'My dialog',
-  })
-  isArchived: boolean = false;
+  @ManyToOne(type => Context, context => context.dialogs)
+  context: Context;
 
-  @Column()
-  @ApiProperty({
-    description: 'The context description of the dialog',
-    example: 'This is a discussion between two users',
-  })
-  context: string;
-
-  @ApiProperty({
-    description: 'The id of the user who created the dialog',
-    example: '5e9f8f8f-8f8f-8f8f-8f8f-8f8f8f8f8f8f',
-  })
   @ManyToOne(type => User, user => user.dialogs)
   user: User;
 
-  @OneToMany(type => Message, message => message.dialog)
-  messages: Message[];
-
   @ManyToOne(type => Character, character => character.dialogs)
   character: Character;
+
+  @OneToMany(type => Message, message => message.dialog)
+  messages: Message[];
 }
 
 

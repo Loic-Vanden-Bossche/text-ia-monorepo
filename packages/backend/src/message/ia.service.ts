@@ -46,7 +46,6 @@ export class IAService {
     let textMessages = null;
 
     while (!textMessages) {
-      console.log(this.buildQuery(dialog, messages).length)
       textMessages = this.parseResponse(await this.getCompletion(this.buildQuery(dialog, messages)), dialog.character);
     }
 
@@ -75,7 +74,7 @@ export class IAService {
   parseResponse(rawRes: string, targetCharacter: Character): string[] | null {
     console.log(' ... parsing', rawRes)
     const messages: string[] = [];
-    for (const [i, line] of rawRes.split("\\n").entries()) {
+    for (const line of rawRes.split("\\n")) {
       console.log(line);
       if(messages.length === 0 && line.trim().length !== 0){
         messages.push(line.trim());
@@ -95,7 +94,7 @@ export class IAService {
   }
 
   buildQuery(dialog: Dialog, messages: Message[]): string {
-    return `${dialog.context}\\n${dialog.character.internalDescription}\\n\\n`
+    return `${dialog.context.internalDescription}\\n${dialog.character.internalDescription}\\n\\n`
       .concat(messages
         .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
         .map(m => `[${m.iaGenerated ? dialog.character.firstName : dialog.user.name}]:  ${m.text}`)

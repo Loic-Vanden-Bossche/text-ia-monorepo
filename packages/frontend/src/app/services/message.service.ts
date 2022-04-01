@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 import {Message} from "../../../lib/message";
 import {User} from "../../../lib/user";
 import * as dayjs from "dayjs";
-import {Character} from "../../../lib/character";
+import {Character, getAvatar} from "../../../lib/character";
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +29,7 @@ export class MessageService {
       type: 'text',
       user: {
         name: message.iaGenerated ? character.firstName: user.name,
-        avatar: message.iaGenerated ? character.image : 'https://i.gifer.com/no.gif',
+        avatar: message.iaGenerated ? getAvatar(character.id) : 'https://i.gifer.com/no.gif',
       },
     };
   }

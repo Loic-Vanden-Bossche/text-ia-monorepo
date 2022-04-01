@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {Body, Controller, Response, Delete, Get, Param, Post, Put, Res, StreamableFile} from '@nestjs/common';
 import { CharacterService } from "./character.service";
 import { Character } from "./character.entity";
 import CharacterUpdateDto from "./character.update.dto";
 import CharacterCreateDto from "./character.create.dto";
+import {CharacterDescription} from "./faces.service";
 
 @Controller('characters')
 export class CharacterController {
@@ -14,8 +15,13 @@ export class CharacterController {
   }
 
   @Get('/generate')
-  random(): Promise<Character> {
+  random(): Promise<CharacterDescription> {
     return this.characterService.getRandom();
+  }
+
+  @Get(':id/avatar')
+  getAvatar(@Param('id')id: string) {
+    return new StreamableFile(this.characterService.getAvatar(id));
   }
 
   @Get(':id')

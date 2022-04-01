@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {DialogService} from "../services/dialog.service";
 import {Dialog} from "../../../lib/dialog";
 import {Router} from "@angular/router";
+import { getAvatar } from "../../../lib/character";
 
 @Component({
   selector: 'app-dialog-list',
@@ -18,6 +19,10 @@ export class DialogListComponent implements OnInit {
     this.dialogService.getDialogList().subscribe(dialogs => {
       this.dialogs = dialogs;
     });
+  }
+
+  getAvatar(id: string) {
+    return getAvatar(id);
   }
 
   openDialog(dialogId: string) {

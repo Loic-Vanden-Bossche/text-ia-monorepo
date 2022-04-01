@@ -6,6 +6,7 @@ import {UserService} from "../user/user.service";
 import {Message} from "../message/message.entity";
 import {Character} from "../character/character.entity";
 import {DeleteResult} from "typeorm";
+import {Context} from "../context/context.entity";
 
 @Injectable()
 export class DialogService {
@@ -19,7 +20,7 @@ export class DialogService {
   findOne(id: string): Promise<Dialog> {
     return Dialog.findOne({
       where: { id },
-      relations: ['user', 'character'],
+      relations: ['user', 'character', 'context'],
     });
   }
 
@@ -36,17 +37,18 @@ export class DialogService {
 
     const user = await this.userService.findOne(dialog.userId);
     const character = await Character.findOne(dialog.characterId);
+    const context = await Context.findOne(dialog.contextId);
 
     if (!user) {
       throw new BadRequestException('User not found');
     }
 
-    return Dialog.create({ ...dialog, isArchived: false, user, character }).save();
+    return Dialog.create({ ...dialog, user, character, context }).save();
   }
 
   async update(id: string, dialog: DialogUpdateDto): Promise<Dialog> {
     const dialogToUpdate = await Dialog.findOne(id);
-    dialogToUpdate.context = dialog.context;
+    dialogToUpdate.context = await Context.findOne(dialog.contextId);
     return await dialogToUpdate.save();
   }
 

@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
 
   open() {
     this.dialogService.open(CharacterModalComponent).onClose.subscribe(dialogId => {
-        this.router.navigate(['/dialog/' + dialogId]);
+        if(dialogId) this.router.navigate(['/dialog/' + dialogId]);
     });
   }
 

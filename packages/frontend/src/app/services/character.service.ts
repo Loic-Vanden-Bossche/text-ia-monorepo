@@ -4,6 +4,7 @@ import {Character} from "../../../lib/character";
 import {map, switchMap} from "rxjs";
 import {Dialog} from "../../../lib/dialog";
 import {UserService} from "./user.service";
+import {Context} from "../../../lib/context";
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,12 @@ export class CharacterService {
     return this.http.get<Character>('http://localhost:8080/characters/generate');
   }
 
-  createDialogWithCharacter(character: Character) {
+  createDialogWithCharacter(character: Character, context: Context) {
     return this.http.post<Character>('http://localhost:8080/characters', character)
       .pipe(switchMap((character) => this.http.post<Dialog>('http://localhost:8080/dialogs', {
-        context: "This is a simple dialog between 2 persons",
         characterId: character.id,
-        userId: this.userService.getUserId()
+        userId: this.userService.getUserId(),
+        contextId: context.id
       })));
   }
 }
