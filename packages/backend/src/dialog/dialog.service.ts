@@ -5,6 +5,7 @@ import DialogUpdateDto from "./dialog.update.dto";
 import {UserService} from "../user/user.service";
 import {Message} from "../message/message.entity";
 import {Character} from "../character/character.entity";
+import {DeleteResult} from "typeorm";
 
 @Injectable()
 export class DialogService {
@@ -49,8 +50,16 @@ export class DialogService {
     return await dialogToUpdate.save();
   }
 
+  async purge(): Promise<DeleteResult> {
+    return Character.delete(await Character.createQueryBuilder('character')
+      .leftJoin(Dialog, 'd', '"d"."characterId" = "character"."id"')
+      .where('"d"."id" is null').getMany().then(characters => characters.map(character => character.id)));
+  }
+
   async delete(id: string): Promise<Dialog> {
     const dialogToDelete = await Dialog.findOne(id);
-    return await dialogToDelete.remove();
+    const remove = await dialogToDelete.remove();
+    await this.purge();
+    return remove;
   }
 }

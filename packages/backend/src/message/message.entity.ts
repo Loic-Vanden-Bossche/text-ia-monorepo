@@ -34,7 +34,7 @@ export class Message extends BaseEntity {
   })
   iaGenerated: boolean;
 
-  @ManyToOne(type => Dialog, dialog => dialog.messages)
+  @ManyToOne(type => Dialog, dialog => dialog.messages, { onDelete: 'CASCADE' })
   dialog: Dialog;
 
   @ApiProperty({

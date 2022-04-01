@@ -10,7 +10,7 @@ import {
   NbChatModule,
   NbIconModule,
   NbButtonModule,
-  NbDialogModule, NbCardModule, NbSpinnerModule
+  NbDialogModule, NbCardModule, NbSpinnerModule, NbListModule, NbUserModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { DialogComponent } from './dialog/dialog.component';
@@ -44,7 +44,9 @@ import { DialogListComponent } from './dialog-list/dialog-list.component';
     NbIconModule,
     NbButtonModule,
     NbCardModule,
-    NbSpinnerModule
+    NbSpinnerModule,
+    NbListModule,
+    NbUserModule
   ],
   providers: [DialogService, SocketService, CharacterService, UserService],
   bootstrap: [AppComponent]

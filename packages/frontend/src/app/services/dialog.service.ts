@@ -15,12 +15,20 @@ export class DialogService {
     return this.http.get<Dialog>('http://localhost:8080/dialogs/' + id);
   }
 
+  getDialogList(): Observable<Dialog[]> {
+    return this.http.get<Dialog[]>('http://localhost:8080/dialogs');
+  }
+
   getMessages(dialogId: string): Observable<Message[]> {
     return this.http.get<Message[]>(`http://localhost:8080/dialogs/${dialogId}/messages`);
   }
 
   resetDialog(dialogId: string): Observable<any> {
     return this.http.post(`http://localhost:8080/messages/${dialogId}/reset`, {});
+  }
+
+  removeDialog(dialogId: string): Observable<any> {
+    return this.http.delete(`http://localhost:8080/dialogs/${dialogId}`);
   }
 
 }
