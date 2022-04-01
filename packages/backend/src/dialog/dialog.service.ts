@@ -8,6 +8,9 @@ import {Character} from "../character/character.entity";
 import {DeleteResult} from "typeorm";
 import {Context} from "../context/context.entity";
 
+import * as fs from 'fs';
+import {join} from "path";
+
 @Injectable()
 export class DialogService {
 
@@ -55,7 +58,11 @@ export class DialogService {
   async purge(): Promise<DeleteResult> {
     return Character.delete(await Character.createQueryBuilder('character')
       .leftJoin(Dialog, 'd', '"d"."characterId" = "character"."id"')
-      .where('"d"."id" is null').getMany().then(characters => characters.map(character => character.id)));
+      .where('"d"."id" is null').getMany().then(characters => characters.map(character => {
+        const id =character.id;
+        fs.unlinkSync(join(process.cwd(), 'avatars', `${id}.jpg`));
+        return id;
+      })));
   }
 
   async delete(id: string): Promise<Dialog> {
