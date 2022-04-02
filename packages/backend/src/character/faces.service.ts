@@ -8,12 +8,12 @@ export interface CharacterDescription {
     lastname: string;
     description: string;
     image: string;
-    age: string | number;
+    age: string;
     sex: string;
     eyeColor: string;
     hairColor: string;
-    color: string;
-    hairLength: string;
+    nationality: string;
+    hairStyle: string;
 }
 
 export interface NamesAPIResponse {
@@ -57,19 +57,18 @@ export class FacesService {
 
   questions = [
     'age',
-    'origin',
     'sex',
     'eye color',
     'hair color',
-    'color',
-    'hair length'
+    'nationality',
+    'hair style'
   ]
 
   constructor(private http: HttpService, private translate: TranslationService) {}
 
   processImageQuestion(image: string, query: string) {
     const banana =  require("@banana-dev/banana-dev");
-    const apiKey = "e3217c36-416a-44d5-b1b2-21960e5b902d";
+    const apiKey = process.env.BANANA_API_KEY;
     const modelKey = "carrot"
 
     const modelParameters = {
@@ -86,7 +85,8 @@ export class FacesService {
   }
 
   processQuestions(image: string): Promise<CharacterDescription> {
-    return Promise.all(this.questions.map(question => this.processImageQuestion(image, `What is the ${question} of this person ?`).then(res => ( { [question]: res.modelOutputs[0].answer as string } ))))
+    return Promise.all(this.questions.map(question => this.processImageQuestion(image, `What is the ${question} of this person ?`)
+      .then(res => ( { [question]: res.modelOutputs[0].answer as string } ))))
       .then((res: {[p: string]: string}[]) => {
         return res.map(o => Object.entries(o)
           .map(([k, v]) => ({ [camelCase(k)]: v })))
@@ -97,15 +97,30 @@ export class FacesService {
 
   generateName(data: CharacterDescription): Promise<{ firstName: string, lastname: string }> {
     return this.http.get<NamesAPIResponse>(`https://api.namefake.com/french-france/${data.sex === 'female' ? 'female' : 'male' }/`)
-      .toPromise().then(data => ({ firstName: data.data.name.split(' ')[0], lastname: data.data.name.split(' ')[1] }))
+      .toPromise().then(data => ({ firstName: data.data.name.split(' ')[0], lastname: data.data.name.split(' ').slice(1).join(' ') }))
+  }
+
+  validAnswers(answers: CharacterDescription) {
+    return Object.values(answers).every(v => v !== undefined)
+      && !isNaN(parseInt(answers.age))
+      && (answers.sex === 'male' || answers.sex === 'female')
+      && answers.nationality !== 'american';
   }
 
   getRandomPerson(): Promise<CharacterDescription> {
     return this.http.get('https://this-person-does-not-exist.com/en?new').toPromise()
-      .then(async response => ({
-        ...(await this.processQuestions(`https://this-person-does-not-exist.com${response.data.src}`)),
-        image: `https://this-person-does-not-exist.com${response.data.src}`,
-      }))
+      .then(async response => {
+        let data: any;
+        const image = `https://this-person-does-not-exist.com${response.data.src}`;
+        do {
+          data = await this.processQuestions(image);
+          if(data.nationality === "american") {
+            data.nationality = "french";
+          }
+        } while (!this.validAnswers(data))
+
+        return {...data, image}
+      })
       .then(async data => ({
         ...data,
         ...(await this.generateName(data)),

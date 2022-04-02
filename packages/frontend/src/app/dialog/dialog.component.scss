@@ -1,3 +1,28 @@
 .return-button {
   margin-right: 30px;
 }
+
+nb-layout-column {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+nb-chat {
+  flex-grow: 1;
+  height: 80vh;
+}
+
+.details-card {
+  height: 80vh;
+  width: 30vw;
+  margin-right: 2.25rem;
+
+  nb-card-header {
+    p {
+      font-weight: 600;
+      margin-block-start: 0;
+      margin-block-end: 0;
+    }
+  }
+}

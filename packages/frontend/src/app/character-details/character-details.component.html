@@ -1,0 +1,73 @@
+<div *ngIf="character">
+  <nb-card class="character-header">
+    <div>
+      <img [src]="character.image || getAvatarUrl(character)" alt="Character image">
+      <h2>{{ character.firstName }} {{ character.lastname }}</h2>
+    </div>
+
+  </nb-card>
+
+  <nb-accordion class>
+    <nb-accordion-item [expanded]="true">
+      <nb-accordion-item-header>
+        Bio
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        {{ character.description }}
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        Description
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        {{ character.description }}
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+
+    <nb-accordion-item>
+      <nb-accordion-item-header>
+        Details
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <div class="table-container">
+          <table class="details-table">
+            <tr>
+              <td>Firstname</td>
+              <td>{{ character.firstName }}</td>
+            </tr>
+            <tr>
+              <td>Lastname</td>
+              <td>{{ character.lastname }}</td>
+            </tr>
+            <tr>
+              <td>Sex</td>
+              <td>{{ character.sex }}</td>
+            </tr>
+            <tr>
+              <td>Age</td>
+              <td>{{ character.age }}</td>
+            </tr>
+            <tr>
+              <td>Eye color</td>
+              <td>{{ character.eyeColor }}</td>
+            </tr>
+            <tr>
+              <td>Hair color</td>
+              <td>{{ character.hairColor }}</td>
+            </tr>
+            <tr>
+              <td>Hair Style</td>
+              <td>{{ character.hairStyle }}</td>
+            </tr>
+            <tr>
+              <td>Nationality</td>
+              <td>{{ character.nationality }}</td>
+            </tr>
+          </table>
+        </div>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+  </nb-accordion>
+</div>

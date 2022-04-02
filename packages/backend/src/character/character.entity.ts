@@ -63,17 +63,17 @@ export class Character extends BaseEntity {
 
   @Column()
   @ApiProperty({
-    description: 'The hair length of the character',
+    description: 'The hair style of the character',
     example: 'long',
   })
-  hairLength: string;
+  hairStyle: string;
 
   @Column()
   @ApiProperty({
-    description: 'The skin color of the character',
+    description: 'The nationality of the character',
     example: 'white',
   })
-  color: string;
+  nationality: string;
 
   @Column()
   @ApiProperty({

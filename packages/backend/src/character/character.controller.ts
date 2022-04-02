@@ -15,7 +15,7 @@ export class CharacterController {
   }
 
   @Get('/generate')
-  random(): Promise<CharacterDescription> {
+  random(): Promise<Omit<CharacterDescription, 'age'> & { age: number }> {
     return this.characterService.getRandom();
   }
 

@@ -69,22 +69,22 @@ export default class CharacterCreateDto {
   hairColor: string;
 
   @ApiProperty({
-    description: 'The hair length of the character',
+    description: 'The hair style of the character',
     example: 'long',
   })
   @IsNotEmpty()
   @IsString()
   @MaxLength(50)
-  hairLength: string;
+  hairStyle: string;
 
   @ApiProperty({
     description: 'The skin color of the character',
-    example: 'white',
+    example: 'asian',
   })
   @IsNotEmpty()
   @IsString()
   @MaxLength(50)
-  color: string;
+  nationality: string;
 
   @ApiProperty({
     description: 'The sex of the character',

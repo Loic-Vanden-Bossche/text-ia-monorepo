@@ -6,81 +6,8 @@
     </div>
   </nb-card-header>
   <nb-card-body>
-    <div class="character-container" *ngIf="character">
-      <nb-card class="character-header">
-        <div class="character-image">
-          <img [src]="character.image" alt="Character image">
-        </div>
-        <div class="character-info">
-          <div class="character-name">
-            <h2>{{ character.firstName }} {{ character.lastname }}</h2>
-          </div>
-        </div>
-      </nb-card>
-
-      <nb-accordion class>
-        <nb-accordion-item [expanded]="true">
-          <nb-accordion-item-header>
-            Bio
-          </nb-accordion-item-header>
-          <nb-accordion-item-body>
-            {{ character.description }}
-          </nb-accordion-item-body>
-        </nb-accordion-item>
-
-        <nb-accordion-item>
-          <nb-accordion-item-header>
-            Description
-          </nb-accordion-item-header>
-          <nb-accordion-item-body>
-            {{ character.description }}
-          </nb-accordion-item-body>
-        </nb-accordion-item>
-
-        <nb-accordion-item>
-          <nb-accordion-item-header>
-            Details
-          </nb-accordion-item-header>
-          <nb-accordion-item-body>
-            <div class="table-container">
-              <table class="details-table">
-                <tr>
-                  <td>Firstname</td>
-                  <td>{{ character.firstName }}</td>
-                </tr>
-                <tr>
-                  <td>Lastname</td>
-                  <td>{{ character.lastname }}</td>
-                </tr>
-                <tr>
-                  <td>Sex</td>
-                  <td>{{ character.sex }}</td>
-                </tr>
-                <tr>
-                  <td>Age</td>
-                  <td>{{ character.age }}</td>
-                </tr>
-                <tr>
-                  <td>Eye color</td>
-                  <td>{{ character.eyeColor }}</td>
-                </tr>
-                <tr>
-                  <td>Hair color</td>
-                  <td>{{ character.hairColor }}</td>
-                </tr>
-                <tr>
-                  <td>Hair length</td>
-                  <td>{{ character.hairLength }}</td>
-                </tr>
-                <tr>
-                  <td>Skin color</td>
-                  <td>{{ character.color }}</td>
-                </tr>
-              </table>
-            </div>
-          </nb-accordion-item-body>
-        </nb-accordion-item>
-      </nb-accordion>
+    <div *ngIf="character">
+      <app-character-details [character]="character"></app-character-details>
       <nb-card class="context-card">
         <nb-card-header class="context-card-header">
           <h4>Dialog context</h4>

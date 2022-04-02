@@ -10,7 +10,6 @@ import {SocketService} from "../services/socket.service";
 import {Message} from "../../../lib/message";
 import {ActivatedRoute, ParamMap} from "@angular/router";
 import {forkJoin} from "rxjs";
-import html2canvas from "html2canvas";
 
 dayjs.extend(utc)
 dayjs.extend(timezone)

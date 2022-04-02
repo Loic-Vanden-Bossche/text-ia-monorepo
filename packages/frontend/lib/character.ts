@@ -10,8 +10,8 @@ export interface Character {
   age: number;
   eyeColor: string;
   hairColor: string;
-  hairLength: string;
-  color: string;
+  hairStyle: string;
+  nationality: string;
   sex: string;
   dialogs: Dialog[];
 }

@@ -4,9 +4,16 @@
     <button class="return-button" (click)="return()" nbButton status="primary"><nb-icon icon="arrow-back-outline"></nb-icon>Return</button>
     <button (click)="resetDialog()" nbButton status="primary"><nb-icon icon="sync-outline"></nb-icon>Reset dialog</button>
   </nb-layout-header>
-
   <nb-layout-column>
-    <nb-chat [style]="{height: '80vh'}" [title]="currentDialog?.context?.description || 'Dialog'">
+    <nb-card class="details-card">
+      <nb-card-header>
+        <p>Character details</p>
+      </nb-card-header>
+      <nb-card-body>
+        <app-character-details [character]="currentDialog?.character"></app-character-details>
+      </nb-card-body>
+    </nb-card>
+    <nb-chat [title]="currentDialog?.context?.description || 'Dialog'">
       <nb-chat-message *ngFor="let msg of messages"
                        [type]="msg.type"
                        [message]="msg.text"
@@ -24,8 +31,5 @@
       </nb-chat-form>
     </nb-chat>
   </nb-layout-column>
-
-  <nb-layout-footer fixed>
-  </nb-layout-footer>
 
 </nb-layout>

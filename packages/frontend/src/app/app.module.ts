@@ -29,6 +29,7 @@ import { HomeComponent } from './home/home.component';
 import {CharacterService} from "./services/character.service";
 import {UserService} from "./services/user.service";
 import { DialogListComponent } from './dialog-list/dialog-list.component';
+import { CharacterDetailsComponent } from './character-details/character-details.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { DialogListComponent } from './dialog-list/dialog-list.component';
     CharacterModalComponent,
     HomeComponent,
     DialogListComponent,
+    CharacterDetailsComponent,
   ],
   imports: [
     BrowserModule,

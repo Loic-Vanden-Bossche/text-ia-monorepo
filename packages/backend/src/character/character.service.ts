@@ -30,7 +30,7 @@ export class CharacterService {
     throw new HttpException('Avatar not found', HttpStatus.NOT_FOUND);
   }
 
-  formatCharacterDescription(character: CharacterDescription): CharacterDescription {
+  formatCharacterDescription(character: CharacterDescription): Omit<CharacterDescription, 'age'> & { age: number } {
    return {...character, age: parseInt(<string>character.age)};
   }
 
@@ -44,7 +44,7 @@ export class CharacterService {
     return download(link, join(process.cwd(), 'avatars'), { filename: `${id}.jpg`});
   }
 
-  getRandom(): Promise<CharacterDescription> {
+  getRandom(): Promise<Omit<CharacterDescription, 'age'> & { age: number }> {
     return this.facesService.getRandomPerson().then(person => this.formatCharacterDescription(person));
   }
 

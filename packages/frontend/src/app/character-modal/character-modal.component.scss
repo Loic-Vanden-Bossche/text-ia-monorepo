@@ -16,63 +16,6 @@
       justify-content: space-between;
     }
   }
-
-  .character-header  {
-
-    padding: 15px;
-    background-color: #414167;
-
-    h4 {
-      margin-block-start: 1em;
-      margin-block-end: 1em;
-    }
-
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 30px;
-
-    .character-image {
-      img {
-        width: 100px;
-        margin-right: 20px;
-        border-radius: 50%;
-        height: auto;
-      }
-    }
-  }
-  nb-accordion {
-    margin-bottom: 30px;
-
-    nb-accordion-item {
-      background-color: #414167;
-    }
-  }
-
-}
-
-.table-container {
-  border-radius: 0.25rem;
-  border: 1px solid var(--border-basic-color-3);
-  overflow: hidden;
-}
-
-.details-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-style: hidden;
-
-  td {
-    border: 1px solid var(--border-basic-color-3);
-    padding: 8px;
-  }
-
-  tr {
-    background-color: #323259;
-    transition: all 0.1s ease-in-out;
-  }
-
-  tr:nth-child(even){background-color: #36365e;}
-  tr:hover {background-color: #3d3d67;}
 }
 
 @media (max-width: 1400px) {
