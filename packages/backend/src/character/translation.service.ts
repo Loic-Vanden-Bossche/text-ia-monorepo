@@ -2,6 +2,7 @@ import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {CharacterDescription} from "./faces.service";
 import {spawn} from "child_process";
 import {join} from "path";
+import convertUTF8 from "../../lib/convert-UTF8";
 
 @Injectable()
 export class TranslationService {
@@ -27,7 +28,7 @@ export class TranslationService {
         reject(data.toString());
       })
       program.stdout.setEncoding('latin1').on('data', (data) => {
-          const translated = data.toString();
+          const translated = process.env.DEV ? data.toString() : convertUTF8(data.toString());
           if(translated === 'error') {
             reject('Something went wrong');
           } else {
