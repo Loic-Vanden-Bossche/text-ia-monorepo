@@ -11,18 +11,19 @@ import {ConfigModule} from "@nestjs/config";
 import { ContextModule } from './context/context.module';
 
 @Module({
-  imports: [UserModule, AuthModule, MessageModule, TypeOrmModule.forRoot(
+  imports: [UserModule, AuthModule, MessageModule, ConfigModule.forRoot({isGlobal: true, envFilePath: ['../../.env']}), TypeOrmModule.forRoot(
     {
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'admin',
-      password: 'admin',
-      database: 'ia-text-chat',
+      host: process.env.DB_HOST,
+      port: parseInt(process.env.DB_PORT),
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      ssl: process.env.DEV ? false : { rejectUnauthorized: false },
       synchronize: true,
     }
-  ), CharacterModule, DialogModule, ConfigModule.forRoot({isGlobal: true, envFilePath: ['../../.env']}), ContextModule],
+  ), CharacterModule, DialogModule, ContextModule],
   controllers: [AppController],
   providers: [AppService],
 })

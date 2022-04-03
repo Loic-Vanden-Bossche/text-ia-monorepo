@@ -5,6 +5,7 @@ import {Message} from "../../../lib/message";
 import {User} from "../../../lib/user";
 import * as dayjs from "dayjs";
 import {Character, getAvatar} from "../../../lib/character";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class MessageService {
   constructor(private http: HttpClient) { }
 
   postMessage(message: any): Observable<Message> {
-    return this.http.post<Message>('http://localhost:8080/messages', message);
+    return this.http.post<Message>(`${environment.apiUrl}/messages`, message);
   }
 
   private static toTimeZone(date: Date): Date {

@@ -59,8 +59,10 @@ export class DialogService {
     return Character.delete(await Character.createQueryBuilder('character')
       .leftJoin(Dialog, 'd', '"d"."characterId" = "character"."id"')
       .where('"d"."id" is null').getMany().then(characters => characters.map(character => {
-        const id =character.id;
-        fs.unlinkSync(join(process.cwd(), 'avatars', `${id}.jpg`));
+        const id = character.id;
+        const path = join(process.cwd(), 'avatars', `${id}.jpg`);
+
+        if(fs.existsSync((path))) fs.unlinkSync(path);
         return id;
       })));
   }

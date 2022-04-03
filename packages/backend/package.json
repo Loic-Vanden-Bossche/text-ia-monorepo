@@ -7,18 +7,18 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "nest build",
+    "build-app": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start": "node dist/src/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "deploy": "rm -r dist && npm run build-app && cp package.json heroku-app && cp -r dist heroku-app && cp -r python heroku-app && cd heroku-app && git add . && git commit -m 'publish' && git push heroku master"
   },
   "dependencies": {
     "@banana-dev/banana-dev": "^2.0.2",
@@ -40,7 +40,9 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "typeorm": "^0.2.45"
+    "typeorm": "^0.2.45",
+    "pg": "^8.7.3",
+    "swagger-ui-express": "^4.3.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

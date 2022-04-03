@@ -1,7 +1,8 @@
 import {WebSocketGateway, WebSocketServer} from "@nestjs/websockets";
 import {Server} from "net";
+import whitelist from "../../lib/whitelist";
 
-@WebSocketGateway(8090, { cors: { origin: 'http://localhost:4200' } })
+@WebSocketGateway({ cors: { origin: whitelist } })
 export class MessageGateway {
   @WebSocketServer()
   server: Server;

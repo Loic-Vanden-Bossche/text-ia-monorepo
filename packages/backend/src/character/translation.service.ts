@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {CharacterDescription} from "./faces.service";
 import {spawn} from "child_process";
 import {join} from "path";
@@ -19,20 +19,27 @@ export class TranslationService {
   }
 
   getTranslation(toTranslate: string): Promise<string> {
-    return new Promise<string>(((resolve, reject) => {
-      spawn('python', [join(process.cwd(), 'python', 'translator.py'), toTranslate])
-        .stdout.setEncoding('latin1').on('data', (data) => {
-        const translated = data.toString();
-        if(translated === 'error') {
-          reject('Something went wrong');
-        } else {
-          resolve(translated);
-        }
-      });
-    }));
+    return  Promise.race([new Promise<string>(((_, reject) => {
+      setTimeout(() => { reject('timeout') }, 5000);
+    })),new Promise<string>(((resolve, reject) => {
+      const program = spawn('python', [join(process.cwd(), 'python', 'translator.py'), toTranslate]);
+      program.stderr.on('data', (data) => {
+        reject(data.toString());
+      })
+      program.stdout.setEncoding('latin1').on('data', (data) => {
+          const translated = data.toString();
+          if(translated === 'error') {
+            reject('Something went wrong');
+          } else {
+            resolve(translated);
+          }
+        });
+    }))]);
   }
 
   generateSummary(res: CharacterDescription): Promise<string> {
-    return this.getTranslation(this.getConstruction(res));
+    return this.getTranslation(this.getConstruction(res)).catch((err) => {
+      throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+    });
   }
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {io, Socket} from "socket.io-client";
 import {Observable} from "rxjs";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class SocketService {
   constructor() {   }
 
   setupSocketConnection() {
-    this.socket = io('http://localhost:8090');
+    this.socket = io(environment.apiUrl);
   }
 
   sendMessage(message: string) {

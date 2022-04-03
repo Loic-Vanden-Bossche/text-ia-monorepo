@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MessageService} from "../services/message.service";
 import {DialogService} from "../services/dialog.service";
 import {Dialog} from "../../../lib/dialog";
@@ -7,9 +7,9 @@ import * as dayjs from "dayjs";
 import * as utc from 'dayjs/plugin/utc'
 import * as timezone from 'dayjs/plugin/timezone'
 import {SocketService} from "../services/socket.service";
-import {Message} from "../../../lib/message";
 import {ActivatedRoute, ParamMap} from "@angular/router";
 import {forkJoin} from "rxjs";
+import {Message} from "../../../lib/message";
 
 dayjs.extend(utc)
 dayjs.extend(timezone)

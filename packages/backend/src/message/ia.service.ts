@@ -1,11 +1,11 @@
 import {Injectable} from "@nestjs/common";
 import {Dialog} from "../dialog/dialog.entity";
 import {Message} from "./message.entity";
-import {MessageGateway} from "./message.gateway";
 import {MessageService} from "./message.service";
 import {DialogService} from "../dialog/dialog.service";
 import {HttpService} from "@nestjs/axios";
 import {Character} from "../character/character.entity";
+import {MessageGateway} from "./message.gateway";
 
 export interface ApiResponse {
   id: string,

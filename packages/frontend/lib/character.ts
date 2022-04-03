@@ -1,4 +1,5 @@
 import {Dialog} from "./dialog";
+import {environment} from "../src/environments/environment";
 
 export interface Character {
   id: string;
@@ -16,4 +17,4 @@ export interface Character {
   dialogs: Dialog[];
 }
 
-export const getAvatar = (id: string) => `http://localhost:8080/characters/${id}/avatar`;
+export const getAvatar = (id: string) => `${environment.apiUrl}/characters/${id}/avatar`;

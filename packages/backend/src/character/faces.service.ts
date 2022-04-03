@@ -117,6 +117,7 @@ export class FacesService {
           if(data.nationality === "american") {
             data.nationality = "french";
           }
+          console.log('New character generated : ', data);
         } while (!this.validAnswers(data))
 
         return {...data, image}

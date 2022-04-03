@@ -3,9 +3,9 @@ import { MessageController } from './message.controller';
 import { MessageService } from './message.service';
 import { DialogService } from "../dialog/dialog.service";
 import {UserService} from "../user/user.service";
-import {MessageGateway} from "./message.gateway";
 import {IAService} from "./ia.service";
 import {HttpModule} from "@nestjs/axios";
+import {MessageGateway} from "./message.gateway";
 
 @Module({
   imports: [HttpModule],
