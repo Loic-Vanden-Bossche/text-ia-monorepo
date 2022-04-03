@@ -1,7 +1,7 @@
 db
 avatars
 .angular
-
+heroku-app
 # Logs
 logs
 *.log
