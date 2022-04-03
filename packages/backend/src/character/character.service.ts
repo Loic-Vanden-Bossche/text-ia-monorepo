@@ -1,12 +1,11 @@
-import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import { Character } from "./character.entity";
 import CharacterCreateDto from "./character.create.dto";
 import CharacterUpdateDto from "./character.update.dto";
 import {CharacterDescription, FacesService} from "./faces.service";
-import {createReadStream, ReadStream} from "fs";
-import { join } from 'path';
-import * as fs from 'fs';
-import * as download from "download";
+import axios from "axios";
+
+import excludeColumn from "../../lib/exclude-column";
 
 @Injectable()
 export class CharacterService {
@@ -14,20 +13,21 @@ export class CharacterService {
   constructor(private facesService: FacesService) {}
 
   findAll(): Promise<Character[]> {
-    return Character.find();
+    return Character.find({ select: <(keyof Character)[]>excludeColumn(Character, ['image']) });
   }
 
   findOne(id: string): Promise<Character> {
-    return Character.findOne(id);
+    return Character.findOne({
+      where: { id },
+      select: <(keyof Character)[]>excludeColumn(Character, ['image'])
+    });
   }
 
-  getAvatar(id: string): ReadStream {
-    const path = join(process.cwd(), 'avatars', `${id}.jpg`);
-    if(fs.existsSync(path)) {
-      return createReadStream(path);
-    }
-
-    throw new HttpException('Avatar not found', HttpStatus.NOT_FOUND);
+  getAvatar(id: string): Promise<Buffer> {
+    return Character.query('SELECT encode(image, \'base64\') FROM public.characters WHERE id = $1', [id])
+      .then(result => {
+        return Buffer.from(result[0].encode, 'base64');
+      });
   }
 
   formatCharacterDescription(character: CharacterDescription): Omit<CharacterDescription, 'age'> & { age: number } {
@@ -35,13 +35,17 @@ export class CharacterService {
   }
 
   async create(character: CharacterCreateDto): Promise<Character> {
-    const createdCharacter = await Character.create({...character, internalDescription: character.description}).save();
+    const createdCharacter = await Character.create({...character, internalDescription: character.description, image: null}).save();
     await this.saveAvatar(createdCharacter.id, character.image);
     return createdCharacter;
   }
 
-  saveAvatar(id: string, link: string): Promise<Buffer> {
-    return download(link, join(process.cwd(), 'avatars'), { filename: `${id}.jpg`});
+  saveAvatar(id: string, link: string): Promise<any> {
+    return axios.get(link, {
+      responseType: 'arraybuffer'
+    })
+    .then((res) => Buffer.from(res.data).toString('base64'))
+    .then(base64 => Character.query('UPDATE public.characters SET image = decode($1, \'base64\') WHERE id = $2', [base64, id]))
   }
 
   getRandom(): Promise<Omit<CharacterDescription, 'age'> & { age: number }> {

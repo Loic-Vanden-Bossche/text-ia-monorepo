@@ -10,6 +10,7 @@ import {Context} from "../context/context.entity";
 
 import * as fs from 'fs';
 import {join} from "path";
+import excludeColumn from "../../lib/exclude-column";
 
 @Injectable()
 export class DialogService {
@@ -24,6 +25,9 @@ export class DialogService {
     return Dialog.findOne({
       where: { id },
       relations: ['user', 'character', 'context'],
+    }).then(dialog => {
+      delete dialog.character.image;
+      return dialog;
     });
   }
 
@@ -39,7 +43,12 @@ export class DialogService {
   async create(dialog: DialogCreateDto): Promise<Dialog> {
 
     const user = await this.userService.findOne(dialog.userId);
-    const character = await Character.findOne(dialog.characterId);
+    const character = await Character.findOne({
+      where: {
+        id: dialog.characterId
+      },
+      select: <(keyof Character)[]>excludeColumn(Character, ['image'])
+    });
     const context = await Context.findOne(dialog.contextId);
 
     if (!user) {

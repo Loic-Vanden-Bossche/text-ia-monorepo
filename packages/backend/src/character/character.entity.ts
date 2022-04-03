@@ -82,6 +82,13 @@ export class Character extends BaseEntity {
   })
   sex: string;
 
+  @Column("bytea", { nullable: true })
+  @ApiProperty({
+    description: 'The base64 image',
+    example: '/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKC....',
+  })
+  image?: Buffer;
+
   @OneToMany(type => Dialog, dialog => dialog.character)
   dialogs: Dialog[];
 }

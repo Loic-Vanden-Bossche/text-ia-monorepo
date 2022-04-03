@@ -20,8 +20,8 @@ export class CharacterController {
   }
 
   @Get(':id/avatar')
-  getAvatar(@Param('id')id: string) {
-    return new StreamableFile(this.characterService.getAvatar(id));
+  async getAvatar(@Param('id')id: string) {
+    return new StreamableFile(await this.characterService.getAvatar(id));
   }
 
   @Get(':id')

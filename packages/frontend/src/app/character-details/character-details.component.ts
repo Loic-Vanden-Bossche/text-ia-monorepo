@@ -13,6 +13,9 @@ export class CharacterDetailsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      console.log(this.character)
+    }, 1000)
   }
 
   getAvatarUrl(character: Character): string {
